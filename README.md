@@ -1,5 +1,5 @@
 # PureNumPy
-Functions and objects help to understand concepts from computer vision and neural networks
+Functions and objects help to understand concepts from computer vision and neural networks.
 
 ### Digital Image Processing Support Functions:
 - conv2d(img, kernel): use Fast Fourier Transform for Convolution operation
