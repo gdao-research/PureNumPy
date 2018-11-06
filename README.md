@@ -18,3 +18,6 @@ Functions and objects help to understand concepts from computer vision and neura
 
 ### Neural Networks:
 - In process
+
+### Contact:
+Please contact gdao.research@gmail.com if you have any problem using this packakge or functions/objects does not output correctly.
