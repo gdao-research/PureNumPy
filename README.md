@@ -1,7 +1,7 @@
 # PureNumPy
 Functions and objects help to understand concepts from computer vision and neural networks.
 
-### Digital Image Processing Support Functions:
+### Digital Image Processing:
 - conv2d(img, kernel): use Fast Fourier Transform for Convolution operation
 - rgb2hsv(img): convert rgb image to hsv
 - rgb2gray(img, method='avg', format='rgb'): if loaded image by opencv and method != 'avg' --> format='bgr'
