@@ -17,7 +17,13 @@ Functions and objects help to understand concepts from computer vision and neura
 - imfill(bw): flood fill algorithm
 
 ### Neural Networks:
-- In process
+- initializers: return an initializer function requires shape input as type of tuple
+  + variance_scaling_initializer(factor=2., mode='FAN_IN', uniform=False, dtype='float32')
+  + xavier_initializer(uniform=True, dtype='float32')
+  + zeros_initializer(dtype='float32')
+  + normal_initializer(mean=0., std=1e-3, dtype='float32')
+  + uniform_initializer(lower=-1, upper=1, dtype='float32')
+  + glorot_initializer(dtype='float32')
 
 ### Contact:
 Please contact gdao.research@gmail.com if you have any problem using this packakge or functions/objects does not output correctly.
