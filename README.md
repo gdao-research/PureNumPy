@@ -24,3 +24,5 @@ Functions and objects help to understand concepts from computer vision and neura
   + normal_initializer(mean=0., std=1e-3, dtype='float32')
   + uniform_initializer(lower=-1, upper=1, dtype='float32')
   + glorot_initializer(dtype='float32')
+
+This project is developed and managed during my PhD study at the (UNC Charlotte)[https://www.uncc.edu/] in free time.
