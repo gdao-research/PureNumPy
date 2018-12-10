@@ -185,7 +185,7 @@ class ReLU:
 
     def minimize(self, dout):
         self.compute_gradients(dout)
-        self.apply_gradients()
+        # self.apply_gradients()
         if type(self.inp) != np.ndarray:
             self.inp.minimize(self.gradients[0])
         self.gradients = None
