@@ -248,3 +248,27 @@ def imfill(bw):
         output_old_array = np.copy(output_array)
         output_array = np.maximum(bw, erose(output_array, np.ones((3, 3))/9.))
     return output_array
+
+
+def hog_feature(img):
+    from scipy.ndimage import uniform_filter
+    img = rgb2gray(img, 'rgb') if img.ndim == 3 else np.at_least_2d(img)
+    C, R = img.shape
+    orientations = 9
+    cx, cy = (8, 8)
+    gx = np.zeros(img.shape)
+    gy = np.zeros(img.shape)
+    gx[:, :-1] = np.diff(img, n=1, axis=1)
+    gy[:-1, :] = np.diff(img, n=1, axis=0)
+    gmag = np.sqrt(gx**2 + gy**2)
+    gorientation = np.arctan2(gy, (gx+1e-15)) * (180/np.pi) + 90
+    nx = C//cx
+    ny = R//cy
+    orientation_hist = np.zeros((nx, ny, orientations))
+    for i in range(orientations):
+        temp = np.where(gorientation < 180 / orientations * (i+1), gorientation, 0)
+        temp = np.where(gorientation >= 180 / orientations + i, temp, 0)
+        cond2 = temp > 0
+        mag = np.where(cond2, gmag, 0)
+        orientation_hist[:,:,i] = uniform_filter(mag, size=(cx,cy))[cx//2::cx, cy//2::cy].T
+    return orientation_hist.ravel()
