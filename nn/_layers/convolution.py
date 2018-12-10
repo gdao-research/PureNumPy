@@ -22,7 +22,7 @@ class Conv2D:
 
     def set_optimizer(self, optim):
         self.optimizer_w = optim(self.w)
-        if use_bias:
+        if self.use_bias:
             self.optimizer_b = optim(self.b, reg=0)  # Does not apply regularizer for bias
 
     def get_weights(self):
