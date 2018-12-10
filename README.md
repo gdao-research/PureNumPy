@@ -15,14 +15,21 @@ Functions and objects help to understand concepts from computer vision and neura
 - hough_line_accumulator(edge_img): return accumulator of line detection using Hough transform
 - connected_component_labeling(bw): return objects map and their sizes
 - imfill(bw): flood fill algorithm
+- hog_feature(img): Histogram of Gradient feature detection
 
 ### Neural Networks:
 - initializers: return an initializer function requires shape input as type of tuple
-  + variance_scaling_initializer(factor=2., mode='FAN_IN', uniform=False, dtype='float32')
-  + xavier_initializer(uniform=True, dtype='float32')
-  + zeros_initializer(dtype='float32')
-  + normal_initializer(mean=0., std=1e-3, dtype='float32')
-  + uniform_initializer(lower=-1, upper=1, dtype='float32')
-  + glorot_initializer(dtype='float32')
+  + variance_scaling_initializer
+  + xavier_initializer
+  + zeros_initializer
+  + normal_initializer
+  + uniform_initializer
+  + glorot_initializer
+- layers: return a layer class
+  + Conv2D
+  + MaxPooling2D
+  + Dense
+  + ReLU
+  + PReLU
 
-This project is developed and managed during my PhD study at the [UNC Charlotte](https://www.uncc.edu/) in free time.
+This project is developed and managed during my PhD study at the [UNC Charlotte](https://www.uncc.edu/) in my spare time.
