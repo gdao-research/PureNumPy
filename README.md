@@ -31,5 +31,13 @@ Functions and objects help to understand concepts from computer vision and neura
   + Dense
   + ReLU
   + PReLU
+- losses: return a loss function
+  + softmax
+  + mean_squared_error
+- optimizers: return an optimizer class
+  + SGD
+  + SGDMomentum
+  + RMSProp
+  + Adam
 
 This project is developed and managed during my PhD study at the [UNC Charlotte](https://www.uncc.edu/) in my spare time.
