@@ -1,21 +1,27 @@
 import numpy as np
 
 
-def conv2d(img, kernel):
+def conv2d(img, kernel, padding='valid'):
     assert img.ndim == 2, 'Image needs to be in 2d array'
     assert kernel.ndim == 2, 'Kernel needs to be in 2d array'
+    assert kernel.shape[0] % 2 == 1, kernel.shape[1] % 2 == 1, 'Please make odd kernel size'
     if img.dtype == 'uint8':
         img = img/255
 
-    s1 = np.array(img.shape)
+    s1 = np.array(img.shape) + np.array(kernel.shape) - 1
     fsize = 2**np.ceil(np.log2(s1)).astype('int32')
     fslice = tuple([slice(0, int(sz)) for sz in s1])
     new_x = np.fft.fft2(img, fsize)
     new_y = np.fft.fft2(kernel, fsize)
     ret = np.fft.ifft2(new_x*new_y)[fslice]
     ret = ret.real
-    return ret
-
+    if padding == 'full':
+        return ret
+    elif padding == 'same':
+        p = (kernel - 1)//2
+    else:  # 'valid'
+        p = kernel - 1
+    return ret[p:-p, p:-p]
 
 def rgb2hsv(img):
     assert img.ndim == 3, 'Image needs to be in 3d'
@@ -284,9 +290,9 @@ def harris_corner_detector(img, threshold, kernel_size=3, p=0.5):
     R, C = img.shape
     K = np.ones((kernel_size, kernel_size), dtype='float32')
     offset = kernel_size//2
-    Sxx = conv2d(Ixx, K)[offset:R-offset, offset:C-offset]
-    Syy = conv2d(Iyy, K)[offset:R-offset, offset:C-offset]
-    Sxy = conv2d(Ixy, K)[offset:R-offset, offset:C-offset]
+    Sxx = conv2d(Ixx, K)
+    Syy = conv2d(Iyy, K)
+    Sxy = conv2d(Ixy, K)
     det = (Sxx * Syy) - (Sxy**2)
     trace = Sxx + Syy
     respond = det - p*(trace**2)
