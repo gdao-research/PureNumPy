@@ -253,7 +253,7 @@ def imfill(bw):
 def hog_feature(img):
     from scipy.ndimage import uniform_filter
     img = rgb2gray(img, 'rgb') if img.ndim == 3 else np.at_least_2d(img)
-    C, R = img.shape
+    R, C = img.shape
     orientations = 9
     cx, cy = (8, 8)
     gx = np.zeros(img.shape)
@@ -262,8 +262,8 @@ def hog_feature(img):
     gy[:-1, :] = np.diff(img, n=1, axis=0)
     gmag = np.sqrt(gx**2 + gy**2)
     gorientation = np.arctan2(gy, (gx+1e-15)) * (180/np.pi) + 90
-    nx = C//cx
-    ny = R//cy
+    nx = R//cx
+    ny = C//cy
     orientation_hist = np.zeros((nx, ny, orientations))
     for i in range(orientations):
         temp = np.where(gorientation < 180 / orientations * (i+1), gorientation, 0)
@@ -272,3 +272,23 @@ def hog_feature(img):
         mag = np.where(cond2, gmag, 0)
         orientation_hist[:,:,i] = uniform_filter(mag, size=(cx,cy))[cx//2::cx, cy//2::cy].T
     return orientation_hist.ravel()
+
+
+def harris_corner_detector(img, threshold, kernel_size=3, p=0.5):
+    if img.ndim == 3:
+        img = rgb2gray(img)
+    dy, dx = np.gradient(img)
+    Ixx = dx**2
+    Iyy = dy**2
+    Ixy = dy*dx
+    R, C = img.shape
+    K = np.ones((kernel_size, kernel_size), dtype='float32')
+    offset = kernel_size//2
+    Sxx = conv2d(Ixx, K)[offset:R-offset, offset:C-offset]
+    Syy = conv2d(Iyy, K)[offset:R-offset, offset:C-offset]
+    Sxy = conv2d(Ixy, K)[offset:R-offset, offset:C-offset]
+    det = (Sxx * Syy) - (Sxy**2)
+    trace = Sxx + Syy
+    respond = det - p*(trace**2)
+    corners = np.argwhere(respond > threshold)
+    return corners
