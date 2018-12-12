@@ -8,7 +8,8 @@ class ReLU:
         self.gradients = None
 
     def set_optimizer(self, optim=None):
-        pass
+        if type(self.inp) != np.ndarray:
+            self.inp.set_optimizer(self, optim)
 
     def get_weights(self):
         return (None, )
@@ -49,7 +50,10 @@ class PReLU:
         self.gradients = None
 
     def set_optimizer(self, optim):
-        self.optimizer_alpha = optim(self.alpha)
+        self.optim = optim
+        self.optimizer_alpha = self.optim(self.alpha)
+        if type(self.inp) != np.ndarray:
+            self.inp.set_optimizer(self, optim)
 
     def get_weights(self):
         return (self.alpha, )
@@ -74,7 +78,7 @@ class PReLU:
         self.gradients = (dx, dalpha)
 
     def apply_gradients(self):
-        self.alpha = self.optimizer_alpha.update(self.alpha, self.gradients[1])
+        self.alpha, self.optimizer_alpha = self.optim.update(self.alpha, self.gradients[1], self.optimizer_alpha)
 
     def minimize(self, dout):
         self.compute_gradients(dout)

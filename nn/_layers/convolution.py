@@ -21,9 +21,12 @@ class Conv2D:
                 self.b = bias_initializer([nb_filters])
 
     def set_optimizer(self, optim):
-        self.optimizer_w = optim(self.w)
+        self.optim = optim
+        self.optimizer_w = self.optim(self.w)
         if self.use_bias:
-            self.optimizer_b = optim(self.b, reg=0)  # Does not apply regularizer for bias
+            self.optimizer_b = self.optim(self.b, reg=0)  # Does not apply regularizer for bias
+        if type(self.inp) != np.ndarray:
+            self.inp.set_optimizer(self, optim)
 
     def get_weights(self):
         return (self.w, self.b) if self.use_bias else (self.w, )
@@ -77,9 +80,9 @@ class Conv2D:
         self.gradients = (dx[:,:,self.padding:-self.padding,self.padding:-self.padding], dw, db)
 
     def apply_gradients(self):
-        self.w = self.optimizer_w.update(self.w, self.gradients[1])
+        self.w, self.optimizer_w = self.optim.update(self.w, self.gradients[1], self.optimizer_w)
         if self.use_bias:
-            self.b = self.optimizer_b.update(self.b, self.gradients[2])
+            self.b, self.optimizer_b = self.optim.update(self.b, self.gradients[2], self.optimizer_b)
 
     def minimize(self, dout):
         self.compute_gradients(dout)

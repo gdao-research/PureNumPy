@@ -16,7 +16,8 @@ class MaxPooling2D:
         self.method = 'fast' if kernel == stride and self.H % kernel == 0 and self.W % kernel == 0 else 'naive'
 
     def set_optimizer(self, optim=None):
-        pass
+        if type(self.inp) != np.ndarray:
+            self.inp.set_optimizer(self, optim)
 
     def get_weights(self):
         return (None, )
@@ -90,7 +91,7 @@ class MaxPooling2D:
 
     def minimize(self, dout):
         self.compute_gradients(dout)
-        self.apply_gradients()
+        # self.apply_gradients()
         if type(self.inp) != np.ndarray:
             self.inp.minimize(self.gradients[0])
         self.gradients = None
