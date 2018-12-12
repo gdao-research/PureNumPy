@@ -31,7 +31,7 @@ Functions and objects help to understand concepts from computer vision and neura
   + Dense
   + ReLU
   + PReLU
-- losses: return a loss function
+- losses: return a loss function and its derivative
   + softmax
   + mean_squared_error
 - optimizers: return an optimizer class
