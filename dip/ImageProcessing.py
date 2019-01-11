@@ -4,7 +4,7 @@ import numpy as np
 def conv2d(img, kernel, padding='valid'):
     assert img.ndim == 2, 'Image needs to be in 2d array'
     assert kernel.ndim == 2, 'Kernel needs to be in 2d array'
-    assert kernel.shape[0] % 2 == 1, kernel.shape[1] % 2 == 1, 'Please make odd kernel size'
+    assert kernel.shape[0] % 2 == 1 and kernel.shape[1] % 2 == 1, 'Please make odd kernel size'
     if img.dtype == 'uint8':
         img = img/255
 
