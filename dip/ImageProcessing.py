@@ -18,9 +18,9 @@ def conv2d(img, kernel, padding='valid'):
     if padding == 'full':
         return ret
     elif padding == 'same':
-        p = (kernel - 1)//2
+        p = (kernel.shape[0] - 1)//2
     else:  # 'valid'
-        p = kernel - 1
+        p = kernel.shape[0] - 1
     return ret[p:-p, p:-p]
 
 def rgb2hsv(img):
