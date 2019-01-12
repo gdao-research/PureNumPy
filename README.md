@@ -43,7 +43,6 @@ Functions and objects help to understand concepts from computer vision and neura
 
 ### How to Use
 - Image processing package contains functions, please check the code to understand how the related functions work.
-
 - Neural networks package is more object oriented and contains supportive objects. Check out [test_nn.py](./test_nn.py) to setup training process.
 
 This project is developed and managed during my PhD study at the [UNC Charlotte](https://www.uncc.edu/) in my spare time.
