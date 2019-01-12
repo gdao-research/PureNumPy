@@ -23,7 +23,7 @@ class Dense:
         if self.use_bias:
             self.optimizer_b = self.optim(self.b, reg=0)
         if type(self.inp) != np.ndarray:
-            self.inp.set_optimizer(self, optim)
+            self.inp.set_optimizer(optim)
 
     def get_weights(self):
         return (self.w, self.b) if self.use_bias else (self.w, )
@@ -38,7 +38,7 @@ class Dense:
     def forward(self, x, is_training=False):
         if type(self.inp) != np.ndarray:
             x = self.inp.forward(x, is_training)
-        out = np.dot(np.reshape(x, [self.x.shape[0], -1]), self.w)
+        out = np.dot(np.reshape(x, [x.shape[0], -1]), self.w)
         if self.use_bias:
             out += self.b
         if is_training:

@@ -26,7 +26,7 @@ class Conv2D:
         if self.use_bias:
             self.optimizer_b = self.optim(self.b, reg=0)  # Does not apply regularizer for bias
         if type(self.inp) != np.ndarray:
-            self.inp.set_optimizer(self, optim)
+            self.inp.set_optimizer(optim)
 
     def get_weights(self):
         return (self.w, self.b) if self.use_bias else (self.w, )
@@ -42,9 +42,9 @@ class Conv2D:
         # _x = x if type(self.inp) == np.ndarray else self.inp.forward(x)
         if type(self.inp) != np.ndarray:
             x = self.inp.forward(x, is_training)
-        N, C, H, W = self.x.shape
+        N, C, H, W = x.shape
         F, _, HH, WW = self.w.shape
-        x_padded = np.pad(self.x, ((0,0), (0,0), (self.padding,self.padding), (self.padding,self.padding)), mode='constant')
+        x_padded = np.pad(x, ((0,0), (0,0), (self.padding,self.padding), (self.padding,self.padding)), mode='constant')
         H += 2*self.padding
         W += 2*self.padding
         out_h = (H-HH)//self.stride+1
@@ -66,7 +66,7 @@ class Conv2D:
         _, C, H, W = self.x.shape
         _, _, HH, WW = self.w.shape
         N, F, out_h, out_w = dout.shape
-        db = np.sum(doub, axis=(0,2,3))
+        db = np.sum(dout, axis=(0,2,3))
         dout_reshape = dout.transpose(1,0,2,3).reshape(F,-1)
         dw = dout_reshape.dot(self.x_cols.T).reshape(self.w.shape)
         dx_cols = (self.w.reshape(F,-1).T.dot(dout_reshape)).reshape((C, HH, WW, N, out_h, out_w))

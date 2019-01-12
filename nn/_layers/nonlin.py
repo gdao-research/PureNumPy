@@ -53,7 +53,7 @@ class PReLU:
         self.optim = optim
         self.optimizer_alpha = self.optim(self.alpha)
         if type(self.inp) != np.ndarray:
-            self.inp.set_optimizer(self, optim)
+            self.inp.set_optimizer(optim)
 
     def get_weights(self):
         return (self.alpha, )

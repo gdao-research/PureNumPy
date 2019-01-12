@@ -17,7 +17,7 @@ class MaxPooling2D:
 
     def set_optimizer(self, optim=None):
         if type(self.inp) != np.ndarray:
-            self.inp.set_optimizer(self, optim)
+            self.inp.set_optimizer(optim)
 
     def get_weights(self):
         return (None, )
