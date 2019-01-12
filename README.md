@@ -1,7 +1,7 @@
 # PureNumPy
 Functions and objects help to understand concepts from computer vision and neural networks.
 
-### Digital Image Processing:
+### Digital Image Processing
 - conv2d(img, kernel): use Fast Fourier Transform for Convolution operation
 - rgb2hsv(img): return hsv image
 - rgb2gray(img, method='avg', format='rgb'): return gray image
@@ -18,7 +18,7 @@ Functions and objects help to understand concepts from computer vision and neura
 - hog_feature(img): return Histogram of Gradient feature
 - harris_corner_detector(img, threshold, kernel_size=3, p=0.5): return corner indices
 
-### Neural Networks:
+### Neural Networks
 - initializers: return an initializer function requires shape input as type of tuple
   + variance_scaling_initializer
   + xavier_initializer
@@ -40,5 +40,10 @@ Functions and objects help to understand concepts from computer vision and neura
   + SGDMomentum
   + RMSProp
   + Adam
+
+### How to Use
+- Image processing package contains functions, please check the code to understand how the related functions work.
+
+- Neural networks package is more object oriented and contains supportive objects. Check out [test_nn.py](./test_nn.py) to setup training process.
 
 This project is developed and managed during my PhD study at the [UNC Charlotte](https://www.uncc.edu/) in my spare time.
