@@ -33,7 +33,7 @@ class Conv2D:
 
     def set_weights(self, w, b=None):
         if b is None and self.use_bias:
-            raise ValueError('Layer {self.name} use bias --> Please input b for set_weights')
+            raise ValueError(f'Layer {self.name} use bias --> Please input b for set_weights')
         self.w = w
         if self.use_bias:    
             self.b = b
