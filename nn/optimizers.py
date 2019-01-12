@@ -16,6 +16,9 @@ class SGD:
     def set_lr(self, lr, dtype='float32'):
         self.lr = np.asarray(lr, dtype=dtype)
 
+    def get_train_step(self):
+        return self.t
+
     def update(self, x, dx, params=(None,)):
         dx += self.reg*x
         next_x = x - self.lr*dx
@@ -37,6 +40,9 @@ class SGDMomentum:
     
     def set_lr(self, lr, dtype='float32'):
         self.lr = np.asarray(lr, dtype=dtype)
+
+    def get_train_step(self):
+        return self.t
 
     def update(self, x, dx, params):
         dx += self.reg*x
@@ -62,6 +68,9 @@ class RMSProp:
     def set_lr(self, lr, dtype='float32'):
         self.lr = np.asarray(lr, dtype=dtype)
 
+    def get_train_step(self):
+        return self.t
+
     def update(self, x, dx, params):
         dx += self.reg*x
         params[0] = self.decay_rate*params[0] + (1-self.decay_rate)*dx**2
@@ -86,6 +95,9 @@ class Adam:
 
     def set_lr(self, lr, dtype='float32'):
         self.lr = np.asarray(lr, dtype=dtype)
+
+    def get_train_step(self):
+        return self.t
 
     def update(self, x, dx, params):
         self.t += 1
