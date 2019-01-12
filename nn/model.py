@@ -16,7 +16,7 @@ class BaseModel(object):
         out = self.model[-1].forward(x, is_training)
         return self.loss_fn(out) if y is None else self.loss_fn(out, y)
 
-    def minimize(self, x, y):
+    def fit(self, x, y):
         loss_fn, dout = self.forward(x, y, is_training=True)
         self.model[-1].minimize(dout[0])
         self.optim.increase_t()

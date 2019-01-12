@@ -21,4 +21,4 @@ class Model(BaseModel):
 
 model = Model(x, y, softmax, Adam(1e-4))
 for _ in range(10):
-    print(model.minimize(x, y))
+    print(model.fit(x, y))
