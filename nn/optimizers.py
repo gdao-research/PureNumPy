@@ -46,9 +46,9 @@ class SGDMomentum:
 
     def update(self, x, dx, params):
         dx += self.reg*x
-        params[0] = self.momentum*params[0] - self.lr*dx
-        next_x = x + params[0]
-        return next_x, params
+        params = self.momentum*params[0] - self.lr*dx
+        next_x = x + params
+        return next_x, (params,)
 
 
 class RMSProp:
@@ -73,9 +73,9 @@ class RMSProp:
 
     def update(self, x, dx, params):
         dx += self.reg*x
-        params[0] = self.decay_rate*params[0] + (1-self.decay_rate)*dx**2
-        next_x = x - self.lr*dx/(np.sqrt(params[0]) + self.epsilon)
-        return next_x, params
+        params = self.decay_rate*params[0] + (1-self.decay_rate)*dx**2
+        next_x = x - self.lr*dx/(np.sqrt(params) + self.epsilon)
+        return next_x, (params,)
 
 
 class Adam:
@@ -100,10 +100,9 @@ class Adam:
         return self.t
 
     def update(self, x, dx, params):
-        self.t += 1
         dx += self.reg*x
-        params[0] = self.beta1*params[0] + (1 - self.beta1)*dx
-        params[1] = self.beta2*params[1] + (1 - self.beta2)*(dx**2)
+        params0 = self.beta1*params[0] + (1 - self.beta1)*dx
+        params1 = self.beta2*params[1] + (1 - self.beta2)*(dx**2)
         learning_rate = self.lr*np.sqrt(1-self.beta2**self.t)/(1-self.beta1**self.t)
-        next_x = x - learning_rate*params[0]/(np.sqrt(params[1]) + self.epsilon)
-        return next_x, params
+        next_x = x - learning_rate*params0/(np.sqrt(params1) + self.epsilon)
+        return next_x, (params0, params1)
