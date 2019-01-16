@@ -1,6 +1,8 @@
 import numpy as np
+from .base import BaseLayer
 
-class Dense:
+
+class Dense(BaseLayer):
     def __init__(self, inp, nb_filters, use_bias=True, kernel_initializer=None, bias_initializer=None, name='dense'):
         self.inp = inp
         self.name = name

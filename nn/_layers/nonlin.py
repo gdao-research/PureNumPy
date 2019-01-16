@@ -1,6 +1,8 @@
 import numpy as np
+from .base import BaseLayer
 
-class ReLU:
+
+class ReLU(BaseLayer):
     def __init__(self, inp, name='relu'):
         self.shape = inp.shape
         self.name = name
@@ -41,7 +43,7 @@ class ReLU:
         self.gradients = None
 
 
-class PReLU:
+class PReLU(BaseLayer):
     def __init__(self, inp, alpha=0.001, name='prelu'):
         self.alpha = np.asarray(alpha, dtype='float32')
         self.shape = inp.shape

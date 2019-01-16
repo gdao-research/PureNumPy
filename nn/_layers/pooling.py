@@ -1,7 +1,8 @@
-import numpy as np 
+import numpy as np
+from .base import BaseLayer
 
 
-class MaxPooling2D:
+class MaxPooling2D(BaseLayer):
     def __init__(self, inp, kernel=2, stride=2, name='maxpooling2d'):
         self.inp = inp
         self.kernel = kernel

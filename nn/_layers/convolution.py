@@ -1,7 +1,8 @@
 import numpy as np
+from .base import BaseLayer
 
 
-class Conv2D:
+class Conv2D(BaseLayer):
     def __init__(self, inp, nb_filters, kernel_size=3, stride=1, padding=1, kernel_initializer=None, use_bias=True, bias_initializer=None, name='conv2d'):
         self.stride = stride
         self.padding = padding
