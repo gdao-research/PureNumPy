@@ -31,6 +31,7 @@ class ReLU(BaseLayer):
     def compute_gradients(self, dout):
         dx = dout * (self.x >= 0)
         self.gradients = (dx, )
+        self.x = None
 
     def apply_gradients(self):
         pass
@@ -85,6 +86,90 @@ class PReLU(BaseLayer):
     def minimize(self, dout):
         self.compute_gradients(dout)
         self.apply_gradients()
+        if type(self.inp) != np.ndarray:
+            self.inp.minimize(self.gradients[0])
+        self.gradients = None
+
+
+class Sigmoid(BaseLayer):
+    def __init__(self, inp, name='sigmoid'):
+        self.shape = inp.shape
+        self.name = name
+        self.inp = inp
+        self.gradients = None
+
+    def set_optimizer(self, optim=None):
+        if type(self.inp) != np.ndarray:
+            self.inp.set_optimizer(self, optim)
+
+    def get_weights(self):
+        return (None, )
+    
+    def set_weights(self, w=None, b=None):
+        pass
+
+    def sigmoid(self, x):
+        return 1.0/(1.0 + np.exp(-x))
+
+    def forward(self, x, is_training=False):
+        if is_training:
+            self.x = x
+        return self.sigmoid(x)
+
+    def compute_gradients(self, dout):
+        sx = self.sigmoid(self.x)
+        dx = dout * sx * (1.0 - sx)
+        self.gradients = (dx, )
+        self.x = None
+
+    def apply_gradients(self):
+        pass
+
+    def minimize(self, dout):
+        self.compute_gradients(dout)
+        # self.apply_gradients()
+        if type(self.inp) != np.ndarray:
+            self.inp.minimize(self.gradients[0])
+        self.gradients = None
+
+
+class Tanh(BaseLayer):
+    def __init__(self, inp, name='tanh'):
+        self.shape = inp.shape
+        self.name = name
+        self.inp = inp
+        self.gradients = None
+
+    def set_optimizer(self, optim=None):
+        if type(self.inp) != np.ndarray:
+            self.inp.set_optimizer(self, optim)
+
+    def get_weights(self):
+        return (None, )
+    
+    def set_weights(self, w=None, b=None):
+        pass
+
+    def tanh(self, x):
+        return np.tanh(x)
+
+    def forward(self, x, is_training=False):
+        if is_training:
+            self.x = x
+        return self.sigmoid(x)
+
+    def compute_gradients(self, dout):
+        tx = self.tanh(self.x)
+        dx = dout * (1.0 - self.tanh(self.x)**2)
+        self.gradients = (dx, )
+        self.x = None
+
+    def apply_gradients(self):
+        pass
+
+    def minimize(self, dout):
+        self.compute_gradients(dout)
+        # self.apply_gradients()
         if type(self.inp) != np.ndarray:
             self.inp.minimize(self.gradients[0])
         self.gradients = None
