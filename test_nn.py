@@ -19,6 +19,6 @@ class Model(BaseModel):
         model.append(Dense(model[-1], nb_classes))
         return model
 
-model = Model(x, y, softmax, Adam(1e-4))
-for _ in range(10):
-    print(model.fit(x, y))
+model = Model(x, y, softmax, Adam(1e-3))
+for _ in range(100):  # train 100 steps
+    print(model.fit(x, y))  # loss should go down
