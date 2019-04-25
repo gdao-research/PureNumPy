@@ -156,7 +156,7 @@ class Tanh(BaseLayer):
     def forward(self, x, is_training=False):
         if is_training:
             self.x = x
-        return self.sigmoid(x)
+        return self.tanh(x)
 
     def compute_gradients(self, dout):
         tx = self.tanh(self.x)
